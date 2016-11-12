@@ -2,12 +2,6 @@ doctype html
 html
 	header
 	body
-		h3 Вычисление выражения
-		form(method='post', action='/')
-			input(type='input', name='expression')
-			input(type='submit', value='Вычислить')
-		div= message
-
 		h3 Простой калькулятор
 		form(method='post')
 			input(type='text', name='simpleExpression', disabled='disabled', id='expression')

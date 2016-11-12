@@ -35,7 +35,7 @@ Calc.prototype.addSign = function(sign) {
 }
 
 Calc.prototype.addDigit = function(digit) {
-	this.expression += digit;
+	this.expression += digit.toString();
 	this.writeExpressionToDisplay();
 }
 
