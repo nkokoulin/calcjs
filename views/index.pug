@@ -1,0 +1,32 @@
+doctype html
+html
+	header
+	body
+		h3 Вычисление выражения
+		form(method='post', action='/')
+			input(type='input', name='expression')
+			input(type='submit', value='Вычислить')
+		div= message
+
+		h3 Простой калькулятор
+		form(method='post')
+			input(type='text', name='simpleExpression', disabled='disabled', id='expression')
+			button(type='button', onClick='Calc.clearDisplay()') C
+			button(type='button', onClick='Calc.addSign("+")') +
+			button(type='button', onClick='Calc.addSign("-")') -
+			button(type='button', onClick='Calc.addSign("*")') *
+			button(type='button', onClick='Calc.addSign("/")') /
+			button(type='button', onClick='Calc.addDigit(1)') 1
+			button(type='button', onClick='Calc.addDigit(2)') 2
+			button(type='button', onClick='Calc.addDigit(3)') 3
+			button(type='button', onClick='Calc.addDigit(4)') 4
+			button(type='button', onClick='Calc.addDigit(5)') 5
+			button(type='button', onClick='Calc.addDigit(6)') 6
+			button(type='button', onClick='Calc.addDigit(7)') 7
+			button(type='button', onClick='Calc.addDigit(8)') 8
+			button(type='button', onClick='Calc.addDigit(9)') 9
+			button(type='button', onClick='Calc.addDigit(0)') 0
+			button(type='button', onClick='Calc.eval()') =
+		h3 История вычислений
+			ul(id='historyList')
+		script(src='/js/calc.js')
