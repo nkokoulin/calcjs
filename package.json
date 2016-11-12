@@ -1,12 +1,12 @@
 {
   "name": "calc",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Simple Calc app",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Nikolay Kokoulin",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",
