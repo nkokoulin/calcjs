@@ -7,11 +7,21 @@
 function Calc(exression) {
 	//expression используется для отображения формулы на дисплее калькулятора
 	this.expression = exression || '';
-	//buffer используется для записи чисел
+	
+	//buffer используется для записи чисел чисел в пямять
 	this.buffer = '';
+	
+	//digitCount используется для подсчета количества цифр в текущем числе.
+	//Используется для проверки перед сохраненим числа из буффера
 	this.digitCount = 0;
+	
+	//Используется для подсчета количества цифр после запятой
 	this.dotCount = 0;
-	this.thereIsDot = 0;
+	
+	//Используется для избежания дублирования десятичной точки
+	this.thereIsDot = false;
+	
+	//Используется для сохранения последнего результата
 	this.result = 0;
 
 	//Вычисление всегда происходит по 1 математической операции за один раз
@@ -21,14 +31,6 @@ function Calc(exression) {
 	this.secondNumberDots = 0;
 	this.currentSign = undefined;
 };
-
-Calc.prototype.evalExpression = function(expression) {
-
-}
-
-Calc.prototype.addEqual = function() {
-
-}
 
 // Calc.eval() возвращает результат, сбрасывая текущие цифры и знак, и ничего не печатает
 Calc.prototype.eval = function() {
@@ -50,21 +52,30 @@ Calc.prototype.eval = function() {
 		*/
 
 		//Если присутствуют десятичные числа, то умножаем оба числа на 10^n до целых
-		if (this.firstNumberDots > 0 || this.secondNumberDots > 0) {
-			let n = 0;
-			if (this.firstNumberDots >= this.secondNumberDots) {
-				n = this.firstNumberDots;
-			} else {
-				n = this.secondNumberDots;
+		if (this.currentSign === '+' || this.currentSign === '-') {
+			if (this.firstNumberDots > 0 || this.secondNumberDots > 0) {
+				let n = 0;
+				if (this.firstNumberDots >= this.secondNumberDots) {
+					n = this.firstNumberDots;
+					console.log(n);
+				} else {
+					n = this.secondNumberDots;
+				}
+				modifier = Math.pow(10, n);
+				a = a * modifier;
+				b = b * modifier;
 			}
-			modifier = Math.pow(10, n);
-			a = a * modifier;
-			b = b * modifier;
 		}
 
 		// Вычисляем результат
-		let toPerform = a + this.currentSign + b;
-		var result = eval(toPerform);
+		var result = '';
+		if (this.currentSign !== '^') {
+			let toPerform = a + this.currentSign + b;
+			result = eval(toPerform);
+		} else {
+			result = Math.pow(a, b);
+		}
+		
 
 		// Если мы меняли числа, то делим результат на 10^n
 		if (modifier > 0) {
@@ -83,6 +94,39 @@ Calc.prototype.eval = function() {
 		this.writeExpressionToDisplay();
 		this.result = result;
 	} 
+}
+
+
+Calc.prototype.evalFunction = function(type) {
+	if (this.buffer !== '') {
+		this.addNumberFromBuffer();
+		this.clearBuffer();
+	}
+
+	if (this.firstNumber !== undefined) {
+		let param = 0;
+		let result = ''; 
+		if (this.secondNumber !== undefined) {
+			this.eval();
+			param = this.result;
+		} else {
+			param = this.firstNumber;
+		}
+
+		switch (type) {
+			case 'cos': result = Math.cos(param);
+			case 'sin': result = Math.sin(param);
+			case 'tan': result = Math.tan(param);
+			case 'sqrt': result = Math.sqrt(param);
+		}
+
+		this.writeExpressionToHistory(type+ '(' + param + ') = ' + result);
+		this.clearDisplay();
+		this.expression = result;
+		this.writeExpressionToDisplay();
+		this.firstNumber = result;
+		this.result = result;
+	}
 }
 
 // При нажатии на кнопку 'C' очищаем дисплей и сбрасываем все сохраненные значения
@@ -112,14 +156,17 @@ Calc.prototype.writeExpressionToDisplay = function() {
 	inputDisplay.value = this.expression;
 }
 
+// Очищаем буфер
 Calc.prototype.clearBuffer = function() {
 	this.buffer = '';
 }
 
+// Выводит любой текст на экран, рассмотреть к удалению
 Calc.prototype.writeResultToDisplay = function(result) {
 	inputDisplay.value = result;
 }
 
+//Добавление десятичной точки
 Calc.prototype.addDot = function() {
 	if (this.thereIsDot !== true) {
 		this.thereIsDot = true;
@@ -169,7 +216,6 @@ Calc.prototype.addDigit = function(digit) {
 	this.writeExpressionToDisplay();
 }
 
-console.log(Math.pow(2, 4));
 var Calc = new Calc();
 var inputDisplay = document.getElementById('expression');
 var historyList = document.getElementById('historyList');

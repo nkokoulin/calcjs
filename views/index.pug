@@ -1,27 +1,39 @@
 doctype html
 html
 	header
+		link(rel='stylesheet', href='/css/calc.css')
 	body
-		h3 Простой калькулятор
-		form(method='post')
-			input(type='text', name='simpleExpression', disabled='disabled', id='expression')
-			button(type='button', onClick='Calc.clearDisplay()') C
-			button(type='button', onClick='Calc.addDot(".")') .
-			button(type='button', onClick='Calc.addSign("+")') +
-			button(type='button', onClick='Calc.addSign("-")') -
-			button(type='button', onClick='Calc.addSign("*")') *
-			button(type='button', onClick='Calc.addSign("/")') /
-			button(type='button', onClick='Calc.addDigit(1)') 1
-			button(type='button', onClick='Calc.addDigit(2)') 2
-			button(type='button', onClick='Calc.addDigit(3)') 3
-			button(type='button', onClick='Calc.addDigit(4)') 4
-			button(type='button', onClick='Calc.addDigit(5)') 5
-			button(type='button', onClick='Calc.addDigit(6)') 6
-			button(type='button', onClick='Calc.addDigit(7)') 7
-			button(type='button', onClick='Calc.addDigit(8)') 8
-			button(type='button', onClick='Calc.addDigit(9)') 9
-			button(type='button', onClick='Calc.addDigit(0)') 0
-			button(type='button', onClick='Calc.eval()') =
-		h3 История вычислений
-			ul(id='historyList')
+		div.calc-container
+			form(method='post')
+				input(type='text', name='simpleExpression', disabled='disabled', id='expression').display
+				button(type='button', onClick='Calc.eval()').button.eval Вычислить
+				div.buttons-container
+					button(type='button', onClick='Calc.addSign("+")').button +
+					button(type='button', onClick='Calc.addSign("-")').button -
+					button(type='button', onClick='Calc.addSign("*")').button *
+					button(type='button', onClick='Calc.addSign("/")').button /
+					button(type='button', onClick='Calc.addDigit(1)').button 1
+					button(type='button', onClick='Calc.addDigit(2)').button 2
+					button(type='button', onClick='Calc.addDigit(3)').button 3
+					button(type='button', onClick='Calc.addDigit(4)').button 4
+					button(type='button', onClick='Calc.addDigit(5)').button 5
+					button(type='button', onClick='Calc.addDigit(6)').button 6
+					button(type='button', onClick='Calc.addDigit(7)').button 7
+					button(type='button', onClick='Calc.addDigit(8)').button 8
+					button(type='button', onClick='Calc.addDigit(9)').button 9
+					button(type='button', onClick='Calc.addDigit(0)').button 0
+					button(type='button', onClick='Calc.addDot(".")').button .
+					button(type='button', onClick='Calc.evalFunction("sqrt")').button.fn &radic;
+					button(type='button', onClick='Calc.addSign("^")').button ^
+					button(type='button', onClick='Calc.evalFunction("cos")').button.fn cos
+					button(type='button', onClick='Calc.evalFunction("sin")').button.fn sin
+					button(type='button', onClick='Calc.evalFunction("tan")').button.fn tan
+					button(type='button', onClick='Calc.clearDisplay()').button C
+					
+					
+				
+		div.history-container
+			h3 История вычислений
+			ul(id='historyList').history
+		div.clear
 		script(src='/js/calc.js')

@@ -1,0 +1,76 @@
+body {
+	background-color: #b0d2d9;
+	padding-top: 50px;
+	color: #fff;
+}
+
+h3 {
+	text-align: center;
+	font-size: 30px;
+}
+
+.calc-container, .history-container {
+	width: 49%;
+}
+
+.calc-container {
+	float: left;
+	border-right: 3px solid #83adb6;
+}
+
+.history-container {
+	float: right;
+}
+
+.clear {
+	clear: both;
+}
+
+.display {
+	background-color: #83adb6;
+	border: 1px solid #fff2f2;
+	color: #fff;
+	display: block;
+	font-size: 30px;
+	font-weight: bold;
+	height: 45px;
+	margin: 0px auto;
+	text-align: center;
+	width: 340px;
+	padding: 0px 20px;
+
+}
+
+.buttons-container {
+	width: 280px;
+	margin: 20px auto;
+}
+
+.button {
+	background-color: #83adb6;
+	border: 1px solid #fff2f2;
+	color: #fff;
+	font-size: 23px;
+	font-weight: bold;
+	height: 45px;
+	width: 45px;
+	text-align: center;
+	margin: 10px 12px;
+}
+
+.button.fn {
+	font-size: 23px;
+	font-weight: normal;
+}
+
+.button.eval {
+	width: 154px;
+	font-size: 18px;
+	height: 23px;
+	display: block;
+	margin: 20px auto;
+}
+
+.history {
+	font-size: 30px;
+}
