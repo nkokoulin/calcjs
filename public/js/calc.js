@@ -1,7 +1,8 @@
 'use strict'
 /* TODO: 
-	Добавить десятичные числа
-	Сделать точные вычисления десятичных чисел
+	добавить возможность вводить отрицательные числа
+	исправить ошибки (деление на ноль, нажатие функций и знаков без числа)
+	добавить логарифмы
 */
 
 function Calc(exression) {
@@ -34,10 +35,8 @@ function Calc(exression) {
 
 // Calc.eval() возвращает результат, сбрасывая текущие цифры и знак, и ничего не печатает
 Calc.prototype.eval = function() {
-	if (this.buffer !== '') {
-		this.addNumberFromBuffer();
-		this.clearBuffer();
-	}
+
+	this.addNumberFromBuffer();
 
 	if (this.secondNumber !== undefined) {
 		let a = this.firstNumber;
@@ -98,10 +97,8 @@ Calc.prototype.eval = function() {
 
 
 Calc.prototype.evalFunction = function(type) {
-	if (this.buffer !== '') {
-		this.addNumberFromBuffer();
-		this.clearBuffer();
-	}
+	
+	this.addNumberFromBuffer();
 
 	if (this.firstNumber !== undefined) {
 		let param = 0;
@@ -121,7 +118,7 @@ Calc.prototype.evalFunction = function(type) {
 		}
 
 		this.writeExpressionToHistory(type+ '(' + param + ') = ' + result);
-		this.clearDisplay();
+		this.clearDisplayAndMemory();
 		this.expression = result;
 		this.writeExpressionToDisplay();
 		this.firstNumber = result;
@@ -130,7 +127,7 @@ Calc.prototype.evalFunction = function(type) {
 }
 
 // При нажатии на кнопку 'C' очищаем дисплей и сбрасываем все сохраненные значения
-Calc.prototype.clearDisplay = function() {
+Calc.prototype.clearDisplayAndMemory = function() {
 	this.expression = '';
 	this.digitCount = 0;
 	this.dotCount = 0;
@@ -159,6 +156,9 @@ Calc.prototype.writeExpressionToDisplay = function() {
 // Очищаем буфер
 Calc.prototype.clearBuffer = function() {
 	this.buffer = '';
+	this.thereIsDot = false;
+	this.digitCount = 0;
+	this.dotCount = 0;
 }
 
 // Выводит любой текст на экран, рассмотреть к удалению
@@ -179,14 +179,17 @@ Calc.prototype.addDot = function() {
 Calc.prototype.addSign = function(sign) {
 	
 	this.addNumberFromBuffer();
-	this.clearBuffer();
 	
 	if (this.secondNumber !== undefined) {
 		this.eval();
 	}
 
 	this.currentSign = sign;
-	this.expression = this.firstNumber + this.currentSign;
+	if (this.firstNumber !== undefined) {
+		this.expression = this.firstNumber + this.currentSign;
+	} else {
+		this.expression = this.currentSign;
+	}
 	this.writeExpressionToDisplay();
 }
 
@@ -201,8 +204,7 @@ Calc.prototype.addNumberFromBuffer = function() {
 		} else {
 			//Выдать ошибку, о том, что невозможно добавить третье число
 		}
-		this.thereIsDot = false;
-		this.digitCount = 0;
+		this.clearBuffer();
 	}
 }
 
