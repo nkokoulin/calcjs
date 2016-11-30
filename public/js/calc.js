@@ -33,6 +33,15 @@ function Calc(exression) {
 	this.currentSign = undefined;
 };
 
+//Функция проверяет, вычислимо ли выражение и возвращает true, если да, false - если нет.
+Calc.prototype.isCorrectExpression = function() {
+	if (this.secondNumber === 0 && this.currentSign === '/') {
+		return false;
+	}
+
+	return true;
+}
+
 // Calc.eval() возвращает результат, сбрасывая текущие цифры и знак, и ничего не печатает
 Calc.prototype.eval = function() {
 
@@ -74,7 +83,6 @@ Calc.prototype.eval = function() {
 		} else {
 			result = Math.pow(a, b);
 		}
-		
 
 		// Если мы меняли числа, то делим результат на 10^n
 		if (modifier > 0) {
